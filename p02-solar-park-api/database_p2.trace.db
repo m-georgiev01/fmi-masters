@@ -1,0 +1,6 @@
+2024-11-14 21:53:30.395739+02:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "TD_CUSTOMERSSET" not found; SQL statement:
+UPDATE td_customersSET name = ?,number_of_projects = ? WHERE is_active = 1 AND id = ? [42102-224]
+2024-11-14 21:53:35.336947+02:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "TD_CUSTOMERSSET" not found; SQL statement:
+UPDATE td_customersSET name = ?,number_of_projects = ? WHERE is_active = 1 AND id = ? [42102-224]

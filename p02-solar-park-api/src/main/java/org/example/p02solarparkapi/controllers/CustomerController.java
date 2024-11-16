@@ -4,15 +4,12 @@ import org.example.p02solarparkapi.entities.Customer;
 import org.example.p02solarparkapi.http.AppResponse;
 import org.example.p02solarparkapi.services.CustomerService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-@Controller
+@RestController
 public class CustomerController {
 
     private CustomerService customerService;
@@ -45,6 +42,36 @@ public class CustomerController {
 
         return AppResponse.success()
                 .withData(collection)
+                .build();
+    }
+
+    @GetMapping("/customers/{id}")
+    public ResponseEntity<?> fetchCustomer(@PathVariable int id) {
+        Customer customer = this.customerService.GetById(id);
+
+        if(customer == null) {
+            return AppResponse.error()
+                    .withMessage("Customer not found!")
+                    .build();
+        }
+
+        return AppResponse.success()
+                .withDataAsArray(customer)
+                .build();
+    }
+
+    @PutMapping("/customers")
+    public ResponseEntity<?> updateCustomer(@RequestBody Customer customer) {
+        boolean isUpdateSuccessful = this.customerService.updateCustomer(customer);
+
+        if(!isUpdateSuccessful) {
+            return AppResponse.error()
+                    .withMessage("Customer not found!")
+                    .build();
+        }
+
+        return AppResponse.success()
+                .withMessage("Update successful!")
                 .build();
     }
 }
