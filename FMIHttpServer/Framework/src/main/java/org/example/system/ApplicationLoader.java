@@ -2,40 +2,39 @@ package org.example.system;
 
 import org.example.entities.ControllerMeta;
 import org.example.entities.RequestInfo;
-import org.example.stereotypes.DeleteMapping;
-import org.example.stereotypes.GetMapping;
-import org.example.stereotypes.PostMapping;
-import org.example.stereotypes.PutMapping;
+import org.example.stereotypes.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.util.HashMap;
 
 public class ApplicationLoader {
+    private static ApplicationLoader instance = null;
     private ClassLoader classLoader = ClassLoader.getSystemClassLoader();
     private HashMap<RequestInfo, ControllerMeta> controllerLookUpTable = new HashMap<RequestInfo, ControllerMeta>();
 
-    public String executeController(RequestInfo httpRequest) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-        String httpMethod = httpRequest.getHttpMethod();
-        String httpEndpoint = httpRequest.getHttpEndpoint();
+    private ApplicationLoader() {
 
-        ControllerMeta controllerMethodReference = this.controllerLookUpTable.get(new RequestInfo(httpMethod, httpEndpoint));
-        if (controllerMethodReference == null) {
-            return "";
+    }
+
+    public static ApplicationLoader getInstance() {
+        if (instance == null) {
+            instance = new ApplicationLoader();
         }
 
-        Class currentClass = controllerMethodReference.getClassReference();
-        String methodName = controllerMethodReference.getMethodName();
+        return instance;
+    }
 
-        var controllerInstance = currentClass.getDeclaredConstructor().newInstance();
+    public HashMap<RequestInfo, ControllerMeta> getControllerTable() {
+        return controllerLookUpTable;
+    }
 
-        return (String) currentClass
-                .getMethod(methodName)
-                .invoke(controllerInstance);
+    public ControllerMeta getController(RequestInfo requestInfo) {
+        return this.controllerLookUpTable.get(requestInfo);
     }
 
     public void findAllClasses(String packageName) throws IOException, ClassNotFoundException {
@@ -72,9 +71,22 @@ public class ApplicationLoader {
                 String methodEndpoint = annotation.value();
                 String methodName = method.getName();
 
+                // check for PathVariables
+                Parameter[] methodParametersCollection = method.getParameters();
+                HashMap<Integer, String> pathVariableIndex = new HashMap<>();
+
+                for (int i = 0; i < methodParametersCollection.length; i++) {
+                    Parameter parameter = methodParametersCollection[i];
+
+                    if (parameter.isAnnotationPresent(org.example.stereotypes.PathVariable.class)) {
+                        PathVariable pathVariable = parameter.getAnnotation(org.example.stereotypes.PathVariable.class);
+                        pathVariableIndex.put(i, pathVariable.value());
+                    }
+                }
+
                 this.controllerLookUpTable.put(
                         new RequestInfo("GET", methodEndpoint),
-                        new ControllerMeta(currentClass, methodName)
+                        new ControllerMeta(currentClass, methodName, pathVariableIndex)
                 );
             }
 

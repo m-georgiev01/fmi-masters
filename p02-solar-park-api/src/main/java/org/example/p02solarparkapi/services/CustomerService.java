@@ -1,73 +1,37 @@
 package org.example.p02solarparkapi.services;
 
 import org.example.p02solarparkapi.entities.Customer;
-import org.example.p02solarparkapi.mappers.CustomerRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
+import org.example.p02solarparkapi.repositories.CustomerRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class CustomerService {
 
-    private JdbcTemplate db;
+    private final CustomerRepository customerRepository;
 
-    public CustomerService(JdbcTemplate jdbc) {
-        this.db = jdbc;
+    public CustomerService(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
     }
 
     public boolean createCustomer(Customer customer) {
-        StringBuilder query = new StringBuilder();
-        query.append("INSERT INTO td_customers")
-                .append("(name)")
-                .append("VALUES")
-                .append("('")
-                .append(customer.getName())
-                .append("')");
-
-        this.db.execute(query.toString());
-        return true;
+        return this.customerRepository.create(customer);
     }
 
     public List<Customer> getAllCustomers() {
-
-        StringBuilder query = new StringBuilder();
-        query.append("SELECT * FROM td_customers WHERE is_active = 1");
-
-        return this.db.query(query.toString(), new CustomerRowMapper());
+        return this.customerRepository.fetchAll();
     }
 
     public Customer GetById(int id) {
-        StringBuilder query = new StringBuilder();
-        query.append("SELECT * FROM td_customers WHERE is_active = 1 AND id = " + id);
-
-        ArrayList<Customer> collection = (ArrayList<Customer>) this.db.query(query.toString(), new CustomerRowMapper());
-        if (collection.isEmpty()){
-            return null;
-        }
-
-        return collection.get(0);
+        return this.customerRepository.fetch(id);
     }
 
     public boolean updateCustomer(Customer customer) {
-        StringBuilder query = new StringBuilder();
-        query.append("UPDATE td_customers ")
-                .append("SET name = ?,")
-                .append("number_of_projects = ? ")
-                .append("WHERE is_active = 1 ")
-                .append("AND id = ?");
+        return customerRepository.update(customer);
+    }
 
-        int resultCount = this.db.update(query.toString(),
-                customer.getName(),
-                customer.getNumberOfProjects(),
-                customer.getId());
-
-        if (resultCount > 1){
-            throw new RuntimeException("More than one customer with same id exists");
-        }
-
-        return resultCount == 1;
+    public boolean removeCustomer(int id){
+        return this.customerRepository.delete(id);
     }
 }

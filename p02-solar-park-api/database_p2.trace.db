@@ -4,3 +4,9 @@ UPDATE td_customersSET name = ?,number_of_projects = ? WHERE is_active = 1 AND i
 2024-11-14 21:53:35.336947+02:00 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "TD_CUSTOMERSSET" not found; SQL statement:
 UPDATE td_customersSET name = ?,number_of_projects = ? WHERE is_active = 1 AND id = ? [42102-224]
+2024-11-18 21:10:22.913653+02:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "UPDATE td_customers SET is_active = 0,[*]WHERE id = ?"; expected "identifier"; SQL statement:
+UPDATE td_customers SET is_active = 0,WHERE id = ? [42001-224]
+2024-11-18 21:10:27.438043+02:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "UPDATE td_customers SET is_active = 0,[*]WHERE id = ?"; expected "identifier"; SQL statement:
+UPDATE td_customers SET is_active = 0,WHERE id = ? [42001-224]

@@ -2,16 +2,16 @@ package org.example;
 
 import org.example.entities.RequestInfo;
 import org.example.system.ApplicationLoader;
+import org.example.system.HttpProcessor;
 
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
 
 public class FrameworkApplication {
     private static final String NEW_LINE = "\r\n";
-    private static ApplicationLoader appLoader = new ApplicationLoader();
+    private static HttpProcessor httpProcessor = new HttpProcessor();
 
     public static void run(Class mainClass) {
         try {
@@ -24,7 +24,7 @@ public class FrameworkApplication {
 
     // get main method & extract info for all packages
     private static void bootstrap(Class mainClass) throws IOException, ClassNotFoundException {
-        appLoader.findAllClasses(mainClass.getPackageName());
+        ApplicationLoader.getInstance().findAllClasses(mainClass.getPackageName());
     }
 
     private static RequestInfo parseHttpRequest(InputStream inputStream) throws IOException {
@@ -88,8 +88,12 @@ public class FrameworkApplication {
 
             var httpRequest = parseHttpRequest(request);
 
+            if (httpRequest.isEmpty()) {
+                continue;
+            }
+
             // request interpreter
-            String controllerMessage = appLoader.executeController(httpRequest);
+            String controllerMessage = httpProcessor.executeController(httpRequest);
 
             String message = buildHTTPResponse(controllerMessage);
             response.write(message.getBytes());
@@ -103,7 +107,7 @@ public class FrameworkApplication {
     private static String buildHTTPResponse(String body) {
         return "HTTP/1.1 200 OK" + NEW_LINE +
                 "Access-Control-Allow-Origin: *" + NEW_LINE +
-                "Content-Length: " + body.getBytes(StandardCharsets.UTF_8).length + NEW_LINE +
+                "Content-Length: " + body.getBytes().length + NEW_LINE +
                 "Content-Type: text/html" + NEW_LINE + NEW_LINE +
                 body + NEW_LINE + NEW_LINE;
     }
