@@ -6,10 +6,10 @@ public class Car {
     int id;
     String make;
     String model;
-    Boolean is_available;
+    Boolean isAvailable;
     BigDecimal dailyPrice;
     int cityId;
-    Boolean isDeleted;
+    String cityName;
 
     public int getId() {
         return id;
@@ -35,12 +35,12 @@ public class Car {
         this.model = model;
     }
 
-    public Boolean getIs_available() {
-        return is_available;
+    public Boolean getIsAvailable() {
+        return isAvailable;
     }
 
-    public void setIs_available(Boolean is_available) {
-        this.is_available = is_available;
+    public void setIsAvailable(Boolean is_available) {
+        this.isAvailable = is_available;
     }
 
     public BigDecimal getDailyPrice() {
@@ -59,11 +59,11 @@ public class Car {
         this.cityId = cityId;
     }
 
-    public Boolean getDeleted() {
-        return isDeleted;
+    public String getCityName() {
+        return cityName;
     }
 
-    public void setDeleted(Boolean deleted) {
-        isDeleted = deleted;
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
     }
 }

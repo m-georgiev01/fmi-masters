@@ -31,6 +31,13 @@ public class AppResponse {
         return new AppResponse();
     }
 
+    public static AppResponse badRequest() {
+        response = new HashMap<>();
+        response.put("status", "bad request");
+        response.put("code", HttpStatus.BAD_REQUEST.value());
+        return new AppResponse();
+    }
+
     public AppResponse withCode(HttpStatus code) {
         response.put("code", code.value());
         return this;

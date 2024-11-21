@@ -26,7 +26,8 @@ VALUES
     ('Mercedes', 'C-class', 100, 1),
     ('Volkswagen', 'Golf', 55, 2),
     ('Volkswagen', 'Passat', 80, 3),
-    ('Mercedes', 'E-class', 125, 4)
+    ('Mercedes', 'E-class', 125, 4),
+    ('Skoda', 'Octavia', 65, 1)
 
 CREATE TABLE td_clients (
     id INT AUTO_INCREMENT PRIMARY KEY,
