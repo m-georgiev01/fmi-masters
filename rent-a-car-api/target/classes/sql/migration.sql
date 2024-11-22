@@ -32,7 +32,8 @@ VALUES
 CREATE TABLE td_clients (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
-    has_accidents BOOLEAN NOT NULL
+    has_accidents BOOLEAN NOT NULL,
+    is_deleted BOOLEAN DEFAULT FALSE
 );
 
 INSERT INTO td_clients (name, has_accidents)
@@ -44,7 +45,6 @@ CREATE TABLE td_offers (
     id INT AUTO_INCREMENT PRIMARY KEY,
     client_id INT,
     car_id INT,
-    status_id INT,
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
     total DECIMAL(10, 2) NOT NULL,

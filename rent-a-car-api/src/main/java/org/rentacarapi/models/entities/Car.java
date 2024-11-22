@@ -3,13 +3,13 @@ package org.rentacarapi.models.entities;
 import java.math.BigDecimal;
 
 public class Car {
-    int id;
-    String make;
-    String model;
-    Boolean isAvailable;
-    BigDecimal dailyPrice;
-    int cityId;
-    String cityName;
+    private int id;
+    private String make;
+    private String model;
+    private Boolean isAvailable;
+    private BigDecimal dailyPrice;
+    private int cityId;
+    private String cityName;
 
     public int getId() {
         return id;

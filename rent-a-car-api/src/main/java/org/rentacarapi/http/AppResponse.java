@@ -38,11 +38,6 @@ public class AppResponse {
         return new AppResponse();
     }
 
-    public AppResponse withCode(HttpStatus code) {
-        response.put("code", code.value());
-        return this;
-    }
-
     public AppResponse withMessage(String message) {
         response.put("message", message);
         return this;

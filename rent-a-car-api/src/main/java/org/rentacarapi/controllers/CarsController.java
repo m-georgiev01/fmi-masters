@@ -26,7 +26,7 @@ public class CarsController {
         }
 
         ArrayList<Car> cars = (ArrayList<Car>) this.carService.getAllCarsForLocation(LocationHelpers.getCityDbId(location));
-        if (cars == null) {
+        if (cars == null || cars.isEmpty()) {
             return AppResponse.notFound()
                     .withMessage("No cars found for location!")
                     .build();
@@ -93,7 +93,7 @@ public class CarsController {
     public ResponseEntity<?> createNewCar(@RequestBody Car car) {
         if(this.carService.createCar(car)) {
             return AppResponse.success()
-                    .withMessage("Cart created successfully")
+                    .withMessage("Car created successfully")
                     .build();
         }
 
