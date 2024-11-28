@@ -1,18 +1,26 @@
 package org.example.controllers;
 
+import org.example.services.CustomerService;
 import org.example.stereotypes.*;
+import org.example.system.ResponseMessage;
 
 @Controller(method = "GET", endpoint = "/customer")
 public class CustomerController {
+    @Autowired
+    private CustomerService customerService;
+
     @GetMapping("/customer")
     public String fetchAllCustomers() {
-        return "Customer info - GET Request";
+        return this.customerService.hello();
     }
 
     @GetMapping("/customer/{id}/projects/{project_id}")
-    public String fetchCustomerById(@PathVariable("id") int id,
-                                    @PathVariable("project_id") int projectId) {
-        return "Customer Info - GET Request By Id " + id + " with project id " + projectId;
+    public ResponseMessage fetchCustomerById(@PathVariable("id") int id,
+                                             @PathVariable("project_id") int projectId) {
+        return new ResponseMessage(
+                "Single Customer Info - " + id + " with project id " + projectId,
+                404
+        );
     }
 
     @PostMapping("/customer")

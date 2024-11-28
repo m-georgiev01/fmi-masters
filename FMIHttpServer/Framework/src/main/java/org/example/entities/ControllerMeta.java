@@ -10,6 +10,7 @@ public class ControllerMeta {
     public ControllerMeta(Class classReference, String methodName) {
         this.classReference = classReference;
         this.methodName = methodName;
+        this.pathVariableIndex = new HashMap<>();
     }
 
     public ControllerMeta(Class classReference, String methodName, HashMap<Integer, String> pathVariableIndex) {

@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.HashMap;
@@ -16,9 +17,9 @@ public class ApplicationLoader {
     private static ApplicationLoader instance = null;
     private ClassLoader classLoader = ClassLoader.getSystemClassLoader();
     private HashMap<RequestInfo, ControllerMeta> controllerLookUpTable = new HashMap<RequestInfo, ControllerMeta>();
+    private HashMap<Class, Object> injectableLookUpTable = new HashMap<Class, Object>();
 
     private ApplicationLoader() {
-
     }
 
     public static ApplicationLoader getInstance() {
@@ -37,6 +38,30 @@ public class ApplicationLoader {
         return this.controllerLookUpTable.get(requestInfo);
     }
 
+    public Object getInjectable(Class classKey, boolean asSingleton) {
+        if (asSingleton) {
+            return this.getInjectable(classKey);
+        }
+
+        if (this.injectableLookUpTable.containsKey(classKey)) {
+            return this.getInjectableInstance(classKey);
+        }
+
+        return null;
+    }
+
+    // As Singleton bu default
+    private Object getInjectable(Class classKey) {
+        Object resultInstance = this.injectableLookUpTable.get(classKey);
+
+        if (resultInstance == null) {
+            resultInstance = this.getInjectableInstance(classKey);
+            this.injectableLookUpTable.put(classKey, resultInstance);
+        }
+
+        return resultInstance;
+    }
+
     public void findAllClasses(String packageName) throws IOException, ClassNotFoundException {
         InputStream classLoaderStream = this.classLoader.getResourceAsStream(packageName.replace('.', '/'));
         BufferedReader classReader = new BufferedReader(new InputStreamReader(classLoaderStream));
@@ -52,13 +77,16 @@ public class ApplicationLoader {
     }
 
     private void classParser(String packageReference, String packageName) throws ClassNotFoundException {
-
         String className = packageReference.replace(".class", "");
         String fullClassName = packageName + "." + className;
         var currentClass = Class.forName(fullClassName);
 
         if (currentClass.isAnnotationPresent(org.example.stereotypes.Controller.class)) {
             this.parseController(currentClass);
+        }
+
+        if (currentClass.isAnnotationPresent(org.example.stereotypes.Injectable.class)) {
+            this.parseInjectable(currentClass);
         }
     }
 
@@ -122,6 +150,24 @@ public class ApplicationLoader {
                         new ControllerMeta(currentClass, methodName)
                 );
             }
+        }
+    }
+
+    private void parseInjectable(Class currentClass) {
+        this.injectableLookUpTable.put(currentClass, null);
+    }
+
+    private Object getInjectableInstance(Class classKey) {
+        try {
+            return classKey.getDeclaredConstructor().newInstance();
+        } catch (InstantiationException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
         }
     }
 }
