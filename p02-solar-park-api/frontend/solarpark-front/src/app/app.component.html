@@ -1,22 +1,6 @@
-<h1>All Customers</h1>
-
-<button (click)="processOnCreate()" class="btn">Create new customer</button>
-
-@for(customerElement of customerCollection; track customerElement) {
-<div class="element">
-  <div>{{ customerElement.name }}</div>
-  <div (click)="processOnEdit(customerElement)" class="btn">Edit</div>
-  <div (click)="processOnDelete(customerElement)" class="btn">Remove</div>
+<div>
+    <h1>Solar park APP</h1>
 </div>
-}
-
-@if (isEditFormVisible && selectedCustomer) {
-<input [(ngModel)]="selectedCustomer.name" type="text" />
-
-<button (click)="processOnSave()">Save</button>
-}
-
-@if (isCreateFormVisible) {
-<input #saveInput type="text" />
-<button (click)="processOnCreateCustomer(saveInput.value)">Save</button>
-}
+<div>
+    <router-outlet></router-outlet>
+</div>

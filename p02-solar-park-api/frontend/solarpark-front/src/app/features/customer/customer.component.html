@@ -1,0 +1,20 @@
+<h3>All Customers</h3>
+
+<button (click)="processOnCreate()" class="btn">Create new customer</button>
+
+<!-- External component, using date from CustomerPage -->
+<cc-data-grid [inputHeaderConfig]="dataGridMapping" [inputDataSource]="customerCollection" [inputIsNavigatable]="true"
+    [inputIsRemovable]="true" (onEdit)="processOnEdit($event)" (onRemove)="processOnDelete($event)"
+    (onNavigate)="processOnNavigate($event)">
+</cc-data-grid>
+
+@if (isEditFormVisible && selectedCustomer) {
+<input [(ngModel)]="selectedCustomer.name" type="text" />
+
+<button (click)="processOnSave()">Save</button>
+}
+
+@if (isCreateFormVisible) {
+<input #saveInput type="text" />
+<button (click)="processOnCreateCustomer(saveInput.value)">Save</button>
+}

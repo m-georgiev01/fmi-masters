@@ -24,4 +24,8 @@ export class CustomerService {
   public deleteCustomer(id: number) {
     return this.httpClient.delete(`${this.baseUrl}/${id}`);
   }
+
+  public getAllProjects($id: number) {
+    return this.httpClient.get(`${this.baseUrl}/${$id}/projects`);
+  }
 }

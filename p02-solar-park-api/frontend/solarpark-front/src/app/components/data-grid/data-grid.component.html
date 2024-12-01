@@ -1,0 +1,60 @@
+<table class="data-grid">
+    <tr class="data-grid--header">
+        @for(headerElement of inputHeaderConfig; track headerElement)
+        {
+        <td>{{ headerElement.column }}</td>
+        }
+
+        <!-- Containers for Edit and Remove -->
+        @if(inputIsNavigatable)
+        {
+        <td>Navigate</td>
+        }
+
+        @if(inputIsEditable)
+        {
+        <td>Edit</td>
+        }
+
+        @if(inputIsRemovable)
+        {
+        <td>Remove</td>
+        }
+    </tr>
+
+    <!-- []  -=> false -->
+    @if(!(inputDataSource?.length))
+    {
+    <div>No data found</div>
+    }
+
+    <!--Generate a row for every element-->
+    @for(dataElement of inputDataSource; track dataElement)
+    {
+    <tr class="data-grid--content">
+        @for(contentElement of inputHeaderConfig; track contentElement)
+        {
+        <!-- Key for accessing the real value-->
+        <td>
+            {{ dataElement[contentElement.value] }}
+        </td>
+        }
+
+        <!-- Containers for Edit and Remove -->
+        @if(inputIsNavigatable)
+        {
+        <td (click)="onNavigate.emit(dataElement)">Navigate</td>
+        }
+
+        @if(inputIsEditable)
+        {
+        <td (click)="onEdit.emit(dataElement)">Edit</td>
+        }
+
+        @if(inputIsRemovable)
+        {
+        <td (click)="onRemove.emit(dataElement)">Remove</td>
+        }
+    </tr>
+    }
+</table>

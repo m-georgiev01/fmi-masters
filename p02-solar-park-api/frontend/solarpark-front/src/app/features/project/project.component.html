@@ -1,0 +1,19 @@
+<h1>Projects</h1>
+
+<button (click)="state.isCreateNewProjectVisible = !state.isCreateNewProjectVisible">
+    Create new Project
+</button>
+
+<cc-data-grid [inputHeaderConfig]="headerConfig" [inputDataSource]="projectCollection">
+</cc-data-grid>
+
+@if(state.isCreateNewProjectVisible)
+{
+<div>
+    <input [(ngModel)]="project.name" type="text">
+
+    <input [(ngModel)]="project.cost" type="number">
+
+    <button (click)="processOnSave()">Save</button>
+</div>
+}
