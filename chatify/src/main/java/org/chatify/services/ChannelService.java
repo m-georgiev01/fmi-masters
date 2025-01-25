@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import org.chatify.models.dtos.ChannelDTO;
 import org.chatify.models.entities.Channel;
 import org.chatify.models.entities.ChannelUser;
+import org.chatify.models.entities.User;
 import org.chatify.models.requests.*;
 import org.chatify.repositories.ChannelRepository;
 import org.chatify.repositories.ChannelUserRepository;
@@ -27,6 +28,10 @@ public class ChannelService {
         this.channelUserRepository = channelUserRepository;
         this.userService = userService;
         this.rolesService = rolesService;
+    }
+
+    public Channel getChannelById(int id){
+        return this.channelRepository.findByIdAndIsActiveTrue(id);
     }
 
     public ArrayList<ChannelDTO> getDMChannelsByUserId(String userId) {
@@ -59,6 +64,30 @@ public class ChannelService {
         this.channelUserRepository.save(cu);
 
         return savedChannel;
+    }
+
+    @Transactional
+    public void createDmChannel(User firstUser, User secondUser) {
+        var channel = new Channel();
+        channel.setName(String.format("%s-%s DM", firstUser.getUsername(), secondUser.getUsername()));
+        channel.setDirectMessage(true);
+        channel.setActive(true);
+
+        var createdChannel = this.channelRepository.save(channel);
+
+        var ownerRole = this.rolesService.getRole("Owner");
+        ChannelUser cuOne = new ChannelUser();
+        cuOne.setUser(firstUser);
+        cuOne.setRole(ownerRole);
+        cuOne.setChannel(createdChannel);
+
+        ChannelUser cuTwo = new ChannelUser();
+        cuTwo.setUser(secondUser);
+        cuTwo.setRole(ownerRole);
+        cuTwo.setChannel(createdChannel);
+
+        this.channelUserRepository.save(cuOne);
+        this.channelUserRepository.save(cuTwo);
     }
 
     @Transactional

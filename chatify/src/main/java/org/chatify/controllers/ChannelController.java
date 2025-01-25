@@ -1,15 +1,13 @@
 package org.chatify.controllers;
 
 import org.chatify.http.AppResponse;
-import org.chatify.models.dtos.ChannelDTO;
 import org.chatify.models.requests.*;
 import org.chatify.services.ChannelService;
-import org.chatify.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "http://localhost:5174")
+@CrossOrigin
 @RestController
 public class ChannelController {
     private final ChannelService channelService;

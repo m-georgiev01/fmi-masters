@@ -2,18 +2,22 @@ package org.chatify.controllers;
 
 import org.chatify.models.entities.User;
 import org.chatify.http.AppResponse;
+import org.chatify.models.requests.AddFriendRequest;
+import org.chatify.services.FriendService;
 import org.chatify.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "http://localhost:5174")
+@CrossOrigin
 @RestController
 public class UserController {
     private final UserService userService;
+    private final FriendService friendService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, FriendService friendService) {
         this.userService = userService;
+        this.friendService = friendService;
     }
 
     @GetMapping("users/search")
@@ -46,6 +50,19 @@ public class UserController {
             return AppResponse.success().withCode(HttpStatus.OK).withData(userDb).build();
         } catch (IllegalArgumentException e) {
             return AppResponse.error().withCode(HttpStatus.BAD_REQUEST).withMessage(e.getMessage()).build();
+        }
+    }
+
+    @PostMapping("/users/friends/add")
+    public ResponseEntity<?> addFriend(@RequestBody AddFriendRequest request) {
+        try {
+            this.friendService.addFriend(request);
+
+            return AppResponse.success().withCode(HttpStatus.CREATED).build();
+        } catch (IllegalArgumentException e) {
+            return AppResponse.error().withCode(HttpStatus.BAD_REQUEST).withMessage(e.getMessage()).build();
+        } catch (Exception e) {
+            return AppResponse.error().withCode(HttpStatus.INTERNAL_SERVER_ERROR).withMessage(e.getMessage()).build();
         }
     }
 }
