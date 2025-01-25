@@ -1,4 +1,4 @@
-package org.chatify.dtos;
+package org.chatify.models.dtos;
 
 public class UserDTO {
     private int id;

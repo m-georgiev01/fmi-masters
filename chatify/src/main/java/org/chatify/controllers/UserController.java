@@ -1,6 +1,6 @@
 package org.chatify.controllers;
 
-import org.chatify.entities.User;
+import org.chatify.models.entities.User;
 import org.chatify.http.AppResponse;
 import org.chatify.services.UserService;
 import org.springframework.http.HttpStatus;

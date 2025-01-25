@@ -1,7 +1,7 @@
 package org.chatify.services;
 
-import org.chatify.dtos.UserDTO;
-import org.chatify.entities.User;
+import org.chatify.models.dtos.UserDTO;
+import org.chatify.models.entities.User;
 import org.chatify.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -46,5 +46,15 @@ public class UserService {
         }
 
         return new UserDTO(user.getId(), user.getUsername(), user.isActive());
+    }
+
+    public User getUserById(int id) {
+        var user = userRepository.findById(id);
+
+        if (user == null) {
+            throw new IllegalArgumentException("User not found");
+        }
+
+        return user;
     }
 }

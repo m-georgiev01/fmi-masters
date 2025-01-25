@@ -1,4 +1,4 @@
-package org.chatify.entities;
+package org.chatify.models.entities;
 
 import jakarta.persistence.*;
 
