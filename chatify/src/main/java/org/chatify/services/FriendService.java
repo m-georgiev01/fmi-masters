@@ -1,6 +1,7 @@
 package org.chatify.services;
 
 import jakarta.transaction.Transactional;
+import org.chatify.models.dtos.ChannelDTO;
 import org.chatify.models.entities.Friend;
 import org.chatify.models.entities.User;
 import org.chatify.models.requests.AddFriendRequest;
@@ -23,7 +24,7 @@ public class FriendService {
     }
 
     @Transactional
-    public void addFriend(AddFriendRequest request) {
+    public ChannelDTO addFriend(AddFriendRequest request) {
         var sender = this.userService.getUserById(request.getSenderId());
         var receiver = this.userService.getUserById(request.getReceiverId());
 
@@ -36,7 +37,7 @@ public class FriendService {
         friendship.setSecondUser(receiver);
 
         this.friendRepository.save(friendship);
-        this.channelService.createDmChannel(sender, receiver);
+        return this.channelService.createDmChannel(sender, receiver);
     }
 
     private boolean checkAlreadyFriend(User sender, User receiver) {

@@ -6,7 +6,7 @@ import React from "react";
 export class NonAuthenticatedRoute extends React.Component<GuardProps> {
     render(): ReactNode {
         if (this.props.state.user) {
-            return <Navigate to="/main" />
+            return <Navigate to="/" />
         }
 
         return this.props.children;

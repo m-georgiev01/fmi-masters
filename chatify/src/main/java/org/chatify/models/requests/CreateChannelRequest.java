@@ -3,14 +3,12 @@ package org.chatify.models.requests;
 public class CreateChannelRequest {
     private int userId;
     private String channelName;
-    private boolean isDM;
 
     public CreateChannelRequest() { }
 
-    public CreateChannelRequest(int userId, String channelName, boolean isDM) {
+    public CreateChannelRequest(int userId, String channelName) {
         this.userId = userId;
         this.channelName = channelName;
-        this.isDM = isDM;
     }
 
     public int getUserId() {
@@ -27,13 +25,5 @@ public class CreateChannelRequest {
 
     public void setChannelName(String channelName) {
         this.channelName = channelName;
-    }
-
-    public boolean getDM() {
-        return isDM;
-    }
-
-    public void setDM(boolean DM) {
-        isDM = DM;
     }
 }

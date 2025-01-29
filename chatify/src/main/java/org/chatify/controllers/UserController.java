@@ -24,10 +24,6 @@ public class UserController {
     public ResponseEntity<?> searchUsers(@RequestParam String username) {
         var users =  userService.getUsersByPartOfUsername(username);
 
-        if (users.isEmpty()) {
-            return AppResponse.error().withCode(HttpStatus.NOT_FOUND).build();
-        }
-
         return AppResponse.success().withCode(HttpStatus.OK).withData(users).build();
     }
 
@@ -56,9 +52,9 @@ public class UserController {
     @PostMapping("/users/friends/add")
     public ResponseEntity<?> addFriend(@RequestBody AddFriendRequest request) {
         try {
-            this.friendService.addFriend(request);
+            var dmChannel = this.friendService.addFriend(request);
 
-            return AppResponse.success().withCode(HttpStatus.CREATED).build();
+            return AppResponse.success().withCode(HttpStatus.CREATED).withData(dmChannel).build();
         } catch (IllegalArgumentException e) {
             return AppResponse.error().withCode(HttpStatus.BAD_REQUEST).withMessage(e.getMessage()).build();
         } catch (Exception e) {

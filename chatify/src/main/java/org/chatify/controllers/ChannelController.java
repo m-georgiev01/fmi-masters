@@ -75,9 +75,9 @@ public class ChannelController {
     @PutMapping("channels/roles/promote")
     public ResponseEntity<?> upgradeToAdmin(@RequestBody AdminUpgradeRequest request){
         try {
-            this.channelService.upgradeToAdmin(request);
+            var updated = this.channelService.upgradeToAdmin(request);
 
-            return AppResponse.success().withCode(HttpStatus.NO_CONTENT).build();
+            return AppResponse.success().withCode(HttpStatus.OK).withData(updated).build();
         } catch (IllegalArgumentException e) {
             return AppResponse.error().withCode(HttpStatus.BAD_REQUEST).withMessage(e.getMessage()).build();
         } catch (Exception e){
@@ -88,9 +88,9 @@ public class ChannelController {
     @PostMapping("channels/{id}/members")
     public ResponseEntity<?> addNewMember(@PathVariable int id, @RequestBody AddChannelMemberRequest request) {
         try {
-            this.channelService.addUserToChannel(id, request);
+            var cu = this.channelService.addUserToChannel(id, request);
 
-            return AppResponse.success().withCode(HttpStatus.NO_CONTENT).build();
+            return AppResponse.success().withCode(HttpStatus.CREATED).withData(cu).build();
         } catch (IllegalArgumentException e) {
             return AppResponse.error().withCode(HttpStatus.BAD_REQUEST).withMessage(e.getMessage()).build();
         } catch (Exception e){
@@ -120,6 +120,17 @@ public class ChannelController {
         } catch (IllegalArgumentException e) {
             return AppResponse.error().withCode(HttpStatus.BAD_REQUEST).withMessage(e.getMessage()).build();
         } catch (Exception e){
+            return AppResponse.error().withCode(HttpStatus.INTERNAL_SERVER_ERROR).withMessage(e.getMessage()).build();
+        }
+    }
+
+    @GetMapping("channels/{id}/members")
+    public ResponseEntity<?> getMembers(@PathVariable int id) {
+        try{
+            var members = this.channelService.getChannelMembers(id);
+
+            return AppResponse.success().withData(members).withCode(HttpStatus.OK).build();
+        } catch (Exception e) {
             return AppResponse.error().withCode(HttpStatus.INTERNAL_SERVER_ERROR).withMessage(e.getMessage()).build();
         }
     }

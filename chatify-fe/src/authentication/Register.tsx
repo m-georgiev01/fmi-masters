@@ -8,23 +8,12 @@ import { navigateTo } from "../navigation";
 export class Register extends React.Component<DefaultProps> {
   render(): React.ReactNode {
     return (
-      <Box
-        maxWidth="30vw"
-        padding={2}
-        borderRadius="25px"
-        sx={{ bgcolor: "#1E293B" }}
-      >
+      <Box sx={{textAlign: "center", display: "flex", flexDirection: "column", height: "100vh", backgroundColor: "#F3F4F6", justifyContent: "center", alignItems: "center"}} >
+        <Box maxWidth="30vw" padding={2} borderRadius="25px" sx={{ bgcolor: "#1E293B" }} >
           <Typography variant="h4" gutterBottom fontWeight="bold">
             Register
           </Typography>
-          <TextField
-            required
-            label="Username"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            value={this.props.state.username}
-            onChange={(e) => this.props.state.saveUsername(e.target.value)}
+          <TextField required label="Username" variant="outlined"  fullWidth margin="normal" value={this.props.state.username} onChange={(e) => this.props.state.saveUsername(e.target.value)}
             sx={{
               '& label.Mui-focused': {
                 color: '#ffffffde',
@@ -34,7 +23,7 @@ export class Register extends React.Component<DefaultProps> {
                   borderColor: '#ffffffde',
                 },
                 '& fieldset': {
-                   borderColor: '#ffffffde',
+                    borderColor: '#ffffffde',
                 },
                 '&:hover fieldset': {
                   borderColor: '#ffffffde',
@@ -48,15 +37,7 @@ export class Register extends React.Component<DefaultProps> {
               },
             }}
           />
-          <TextField
-            required
-            label="Password"
-            type="password"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            value={this.props.state.password}
-            onChange={(e) => this.props.state.savePassword(e.target.value)}
+          <TextField required label="Password" type="password" variant="outlined" fullWidth margin="normal" value={this.props.state.password} onChange={(e) => this.props.state.savePassword(e.target.value)}
             sx={{
               '& label.Mui-focused': {
                 color: '#ffffffde',
@@ -66,7 +47,7 @@ export class Register extends React.Component<DefaultProps> {
                   borderColor: '#ffffffde',
                 },
                 '& fieldset': {
-                   borderColor: '#ffffffde',
+                    borderColor: '#ffffffde',
                 },
                 '&:hover fieldset': {
                   borderColor: '#ffffffde',
@@ -80,27 +61,17 @@ export class Register extends React.Component<DefaultProps> {
               },
             }}
           />
-          <Button
-            variant="contained"
-            color="primary"
-            fullWidth
-            onClick={this.props.state.registerUser}
-            sx={{ mt: 2 }}
-          >
+          <Button variant="contained" color="primary" fullWidth onClick={this.props.state.registerUser} sx={{ mt: 2 }} >
             Register
           </Button>
           <Typography variant="body2" sx={{ mt: 2 }}>
             Already have an account? 
-            <Link
-              component="button"
-              onClick={() => navigateTo("/login")}
-              underline="hover"
-              sx={{ ml: 0.5}}
-            >
+            <Link component="button" onClick={() => navigateTo("/login")} underline="hover" sx={{ ml: 0.5}} >
               Login
             </Link>
           </Typography>
         </Box>
+      </Box>
     )
   }
 }

@@ -2,8 +2,11 @@ package org.chatify.services;
 
 import jakarta.transaction.Transactional;
 import org.chatify.models.dtos.ChannelDTO;
+import org.chatify.models.dtos.ChannelUserDTO;
+import org.chatify.models.dtos.UserDTO;
 import org.chatify.models.entities.Channel;
 import org.chatify.models.entities.ChannelUser;
+import org.chatify.models.entities.Role;
 import org.chatify.models.entities.User;
 import org.chatify.models.requests.*;
 import org.chatify.repositories.ChannelRepository;
@@ -11,6 +14,7 @@ import org.chatify.repositories.ChannelUserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 @Service
 public class ChannelService {
@@ -45,13 +49,13 @@ public class ChannelService {
     }
 
     @Transactional
-    public Channel createChannel(CreateChannelRequest request) {
+    public ChannelDTO createChannel(CreateChannelRequest request) {
         var user = this.userService.getUserById(request.getUserId());
         var ownerRole = this.rolesService.getRole("Owner");
 
         Channel channel = new Channel();
         channel.setName(request.getChannelName());
-        channel.setDirectMessage(request.getDM());
+        channel.setDirectMessage(false);
         channel.setActive(true);
 
         var savedChannel = this.channelRepository.save(channel);
@@ -63,11 +67,11 @@ public class ChannelService {
 
         this.channelUserRepository.save(cu);
 
-        return savedChannel;
+        return new ChannelDTO(savedChannel.getId(), savedChannel.getName());
     }
 
     @Transactional
-    public void createDmChannel(User firstUser, User secondUser) {
+    public ChannelDTO createDmChannel(User firstUser, User secondUser) {
         var channel = new Channel();
         channel.setName(String.format("%s-%s DM", firstUser.getUsername(), secondUser.getUsername()));
         channel.setDirectMessage(true);
@@ -75,19 +79,21 @@ public class ChannelService {
 
         var createdChannel = this.channelRepository.save(channel);
 
-        var ownerRole = this.rolesService.getRole("Owner");
+        var memberRole = this.rolesService.getRole("Member");
         ChannelUser cuOne = new ChannelUser();
         cuOne.setUser(firstUser);
-        cuOne.setRole(ownerRole);
+        cuOne.setRole(memberRole);
         cuOne.setChannel(createdChannel);
 
         ChannelUser cuTwo = new ChannelUser();
         cuTwo.setUser(secondUser);
-        cuTwo.setRole(ownerRole);
+        cuTwo.setRole(memberRole);
         cuTwo.setChannel(createdChannel);
 
         this.channelUserRepository.save(cuOne);
         this.channelUserRepository.save(cuTwo);
+
+        return new ChannelDTO(createdChannel.getId(), createdChannel.getName());
     }
 
     @Transactional
@@ -111,7 +117,7 @@ public class ChannelService {
     }
 
     @Transactional
-    public void upgradeToAdmin(AdminUpgradeRequest request) {
+    public ChannelUserDTO upgradeToAdmin(AdminUpgradeRequest request) {
         var initiator = this.userService.getUserById(request.getInitiatorId());
         var targetUser = this.userService.getUserById(request.getTargetId());
 
@@ -132,11 +138,17 @@ public class ChannelService {
         var amdinRole = this.rolesService.getRole("Admin");
 
         targetChannelUser.setRole(amdinRole);
-        channelUserRepository.save(targetChannelUser);
+        var updated = channelUserRepository.save(targetChannelUser);
+        return new ChannelUserDTO(
+                updated.getId(),
+                new ChannelDTO(updated.getChannel().getId(), updated.getChannel().getName()),
+                new UserDTO(updated.getUser().getId(), updated.getUser().getUsername(), updated.getUser().isActive()),
+                updated.getRole()
+        );
     }
 
     @Transactional
-    public void addUserToChannel(int channelId, AddChannelMemberRequest request) {
+    public ChannelUserDTO addUserToChannel(int channelId, AddChannelMemberRequest request) {
         var initiator = this.userService.getUserById(request.getInitiatorId());
         var newUser = this.userService.getUserById(request.getNewUserId());
 
@@ -166,7 +178,14 @@ public class ChannelService {
         newChannelUser.setChannel(channel);
         newChannelUser.setRole(memberRole);
 
-        channelUserRepository.save(newChannelUser);
+        var savedCu = channelUserRepository.save(newChannelUser);
+
+        return new ChannelUserDTO(
+                savedCu.getId(),
+                new ChannelDTO(savedCu.getChannel().getId(), savedCu.getChannel().getName()),
+                new UserDTO(savedCu.getUser().getId(), savedCu.getUser().getUsername(), savedCu.getUser().isActive()),
+                savedCu.getRole()
+        );
     }
 
     @Transactional
@@ -213,6 +232,18 @@ public class ChannelService {
         }
 
         channelUserRepository.delete(targetChannelUser);
+    }
+
+    public ArrayList<ChannelUserDTO> getChannelMembers(int channelId){
+        return this.channelUserRepository.findByChannelId(channelId)
+                .stream()
+                .map(cm -> new ChannelUserDTO(
+                        cm.getId(),
+                        new ChannelDTO(cm.getChannel().getId(), cm.getChannel().getName()),
+                        new UserDTO(cm.getUser().getId(), cm.getUser().getUsername(), cm.getUser().isActive()),
+                        cm.getRole()
+                ))
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     private ChannelUser getChannelUser(int userId, int channelId, String userName) {
