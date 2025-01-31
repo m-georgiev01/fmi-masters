@@ -21,10 +21,6 @@ public class ChannelController {
         try {
             var dms =  this.channelService.getDMChannelsByUserId(userId);
 
-            if (dms.isEmpty()){
-                return AppResponse.success().withCode(HttpStatus.NOT_FOUND).build();
-            }
-
             return AppResponse.success().withCode(HttpStatus.OK).withData(dms).build();
         } catch (NumberFormatException e) {
             return AppResponse.error().withCode(HttpStatus.BAD_REQUEST).withMessage("UserId was not in the correct format!").build();
@@ -35,10 +31,6 @@ public class ChannelController {
     public ResponseEntity<?> searchGroupChannels(@RequestParam String userId) {
         try {
             var gc =  this.channelService.getGroupChannelsByUserId(userId);
-
-            if (gc.isEmpty()){
-                return AppResponse.success().withCode(HttpStatus.NOT_FOUND).build();
-            }
 
             return AppResponse.success().withCode(HttpStatus.OK).withData(gc).build();
         } catch (NumberFormatException e) {

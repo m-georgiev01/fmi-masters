@@ -1,8 +1,10 @@
 import { observer } from "mobx-react";
 import React from "react";
 import { DefaultProps } from "../models/DefaultProps";
-import { Box, TextField, Typography } from "@mui/material";
+import { Box, IconButton, TextField, Typography } from "@mui/material";
 import { Admin, Member, Owner } from "../models/Constants";
+import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
+import UpgradeIcon from '@mui/icons-material/Upgrade';
 
 @observer
 export class ChannelInfo extends React.Component<DefaultProps> {
@@ -23,12 +25,16 @@ export class ChannelInfo extends React.Component<DefaultProps> {
                                 <Typography variant="body1">{cm.user?.username}</Typography>
                                 
                                 {currUserRole === Owner && cm.role.name === Member ?
-                                <Box>
-                                    <Typography sx={{ pl: "5px" ,cursor: "pointer", ":hover": {textDecoration: "underline"}}} onClick={() => removeMember(cm.user.id)}>Remove</Typography> 
-                                    <Typography sx={{ pl: "5px" ,cursor: "pointer", ":hover": {textDecoration: "underline"}}} onClick={() => promoteToAdmin(cm.user.id)}>Promote</Typography> 
-                                </Box> :
-                                <></>}
-                                
+                                    <>
+                                        <IconButton sx={{p: "0", pl: "5px"}} onClick={() => removeMember(cm.user.id)}>
+                                            <PersonRemoveIcon />
+                                        </IconButton>
+                                        <IconButton sx={{p: "0", pl: "5px"}} onClick={() => promoteToAdmin(cm.user.id)}>
+                                            <UpgradeIcon />
+                                        </IconButton>
+                                    </> :
+                                    <></>
+                                }
                             </Box>
                         )}
                     </Box>

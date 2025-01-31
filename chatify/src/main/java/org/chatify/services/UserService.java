@@ -16,11 +16,11 @@ public class UserService {
     }
 
     public ArrayList<UserDTO> getUsersByPartOfUsername(String username) {
-        return userRepository.findByUsernameContainingIgnoreCase(username);
+        return userRepository.findByUsernameContainingIgnoreCaseAndIsActiveTrue(username);
     }
 
     public UserDTO registerUser(String username, String password) {
-        var existingUser = userRepository.findByUsername(username);
+        var existingUser = userRepository.findByUsernameAndIsActiveTrue(username);
         if (existingUser != null) {
             throw new IllegalArgumentException("User not found");
         }
@@ -35,7 +35,7 @@ public class UserService {
     }
 
     public UserDTO loginUser(String username, String password) {
-        var user = userRepository.findByUsername(username);
+        var user = userRepository.findByUsernameAndIsActiveTrue(username);
 
         if (user == null) {
             throw new IllegalArgumentException("Username not found");

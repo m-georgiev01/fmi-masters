@@ -29,22 +29,19 @@ export class Service {
     fetchGroupChannels = (userId: number): Promise<Channel[]> => {
         return axios.get(`${ApiBaseUrl}/channels?userId=${userId}`)
         .then(res => res.data)
-        .then(c => c.data)
-        .catch(e => console.error(e));
+        .then(c => c.data);
     }
 
     fetchDms = (userId: number): Promise<Channel[]> => {
         return axios.get(`${ApiBaseUrl}/channels/dm?userId=${userId}`)
         .then(res => res.data)
-        .then(c => c.data)
-        .catch(e => console.error(e));
+        .then(c => c.data);
     }
 
     fetchMessages = (channelId: number): Promise<Message[]> => {
         return axios.get(`${ApiBaseUrl}/channels/${channelId}/messages`)
         .then(res => res.data)
-        .then(m => m.data)
-        .catch(e => console.error(e));
+        .then(m => m.data);
     }
 
     fetchChannelMembers = (channelId: number): Promise<Participant[]> => {
@@ -86,8 +83,7 @@ export class Service {
             channelName
         })
         .then(res => res.data)
-        .then(c => c.data)
-        .catch(e => console.error(e));
+        .then(c => c.data);
     }
 
     sendMessage = (channelId: number, senderId: number, content: string): Promise<Message> => {
@@ -97,8 +93,7 @@ export class Service {
                 content
             })
             .then(res => res.data)
-            .then(m => m.data)
-            .catch(e => console.error(e));
+            .then(m => m.data);
     }
 
     searchForUsers = (username: string): Promise<User[]> => {
@@ -114,8 +109,7 @@ export class Service {
             receiverId
         })
         .then(res => res.data)
-        .then(d => d.data)
-        .catch(e => console.error(e));
+        .then(d => d.data);
     }
 
     createChannel = (userId: number, channelName: string): Promise<Channel> => {
@@ -125,8 +119,7 @@ export class Service {
                 channelName
             })
             .then(res => res.data)
-            .then(c => c.data)
-            .catch(e => console.error(e));
+            .then(c => c.data);
     }
 
     deleteChannel = (channelId: number, userId: number): Promise<number> => {
@@ -150,7 +143,6 @@ export class Service {
                 newUserId
             })
             .then(res => res.data)
-            .then(c => c.data)
-            .catch(e => console.error(e));
+            .then(c => c.data);
     }
 }

@@ -127,9 +127,12 @@ class State implements IState {
       return;
     }
 
-    this.user = userApi;
-    this.username = DefaultString;
-    this.password = DefaultString;
+    runInAction(() => {
+      this.user = userApi;
+      this.username = DefaultString;
+      this.password = DefaultString;
+    })
+
     localStorage.setItem("user", JSON.stringify(userApi));
     this.initialLoad();
     navigateTo("/")
@@ -178,10 +181,15 @@ class State implements IState {
   }
 
   async getMessages() {
-    const msgs = await this.service.fetchMessages(this.selectedChannel?.id ?? -1);
-    runInAction(() => {
-      this.messages = msgs;
-    })
+    try {    
+      const msgs = await this.service.fetchMessages(this.selectedChannel?.id ?? -1);
+      
+      runInAction(() => {
+        this.messages = msgs;
+      })
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   async getChannelMembers(){
@@ -228,16 +236,20 @@ class State implements IState {
 
   async saveChangedChannelName() {
     if(this.selectedChannel && this.user){
-      const changedChannel = await this.service.saveChangedChannelName(this.selectedChannel.id, this.user.id, this.editedChannelName);
+      try {
+        const changedChannel = await this.service.saveChangedChannelName(this.selectedChannel.id, this.user.id, this.editedChannelName);
 
-      runInAction(() => {
-        this.selectedChannel = changedChannel;
-      
-        const index = this.channels.findIndex(c => c.id === changedChannel.id);
-        if(index !== -1) this.channels.splice(index, 1, changedChannel);
+        runInAction(() => {
+          this.selectedChannel = changedChannel;
+        
+          const index = this.channels.findIndex(c => c.id === changedChannel.id);
+          if(index !== -1) this.channels.splice(index, 1, changedChannel);
 
-        this.isEditingChannel = false;
-      })
+          this.isEditingChannel = false;
+        })
+      } catch (e) {
+        console.error(e);
+      }
     }
   }
 
@@ -247,10 +259,14 @@ class State implements IState {
 
   async sendMessage(){
     if(this.selectedChannel && this.user && this.message !== DefaultString){
-      var msg = await this.service.sendMessage(this.selectedChannel.id, this.user.id, this.message);
+      try {
+        var msg = await this.service.sendMessage(this.selectedChannel.id, this.user.id, this.message);
 
-      this.messages.push(msg);
-      this.message = DefaultString
+        this.messages.push(msg);
+        this.message = DefaultString
+      } catch (e) {
+        console.error(e);
+      }
     }
   }
 
@@ -276,13 +292,17 @@ class State implements IState {
 
   async addFriend(receiverId: number){
     if(this.user){
-      const dm = await this.service.addFriend(this.user.id, receiverId);
+      try {
+        const dm = await this.service.addFriend(this.user.id, receiverId);
       
-      runInAction(() => {
-        this.dms.push(dm);
-        this.userInput = DefaultString;
-        this.usersSearch = null;
-      })
+        runInAction(() => {
+          this.dms.push(dm);
+          this.userInput = DefaultString;
+          this.usersSearch = null;
+        })   
+      } catch (e) {
+        console.error(e);
+      }
     }
   }
 
@@ -298,15 +318,18 @@ class State implements IState {
 
   async createChannel() {
     if(this.user && this.createChannelInput !== DefaultString){
-      const channel = await this.service.createChannel(this.user.id, this.createChannelInput);
+      try {
+        const channel = await this.service.createChannel(this.user.id, this.createChannelInput);
 
-      runInAction(() => {
-        this.channels.push(channel);
-      })
+        runInAction(() => {
+          this.channels.push(channel);
+        })
 
-      this.changeIsCreateModalOpen(false);
+        this.changeIsCreateModalOpen(false);
+      } catch (e) {
+        console.error(e);
+      }
     }
-    
   }
 
   async deleteChannel() {
@@ -346,13 +369,17 @@ class State implements IState {
 
   async addMember(targetId: number){
     if(this.user && this.selectedChannel){
-      const participant = await this.service.addNewMember(this.selectedChannel.id, this.user.id, targetId);
+      try {
+        const participant = await this.service.addNewMember(this.selectedChannel.id, this.user.id, targetId);
       
-      runInAction(() => {
-        this.channelMembers.push(participant);
-        this.membersInput = DefaultString;
-        this.membersSearch = null;
-      })
+        runInAction(() => {
+          this.channelMembers.push(participant);
+          this.membersInput = DefaultString;
+          this.membersSearch = null;
+        }) 
+      } catch (e) {
+        console.error(e);
+      }
     }
   }
 
