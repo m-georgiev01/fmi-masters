@@ -1,0 +1,101 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\repos\\fmi\\fmi-masters\\MusicManagerSOAP\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{AD8FBE99-76B1-4A3A-B05E-C98E38379396}|MusicManagerServer\\MusicManagerServer.csproj|d:\\repos\\fmi\\fmi-masters\\musicmanagersoap\\musicmanagerserver\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{AD8FBE99-76B1-4A3A-B05E-C98E38379396}|MusicManagerServer\\MusicManagerServer.csproj|solutionrelative:musicmanagerserver\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AD8FBE99-76B1-4A3A-B05E-C98E38379396}|MusicManagerServer\\MusicManagerServer.csproj|d:\\repos\\fmi\\fmi-masters\\musicmanagersoap\\musicmanagerserver\\models\\song.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AD8FBE99-76B1-4A3A-B05E-C98E38379396}|MusicManagerServer\\MusicManagerServer.csproj|solutionrelative:musicmanagerserver\\models\\song.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AD8FBE99-76B1-4A3A-B05E-C98E38379396}|MusicManagerServer\\MusicManagerServer.csproj|d:\\repos\\fmi\\fmi-masters\\musicmanagersoap\\musicmanagerserver\\services\\songservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AD8FBE99-76B1-4A3A-B05E-C98E38379396}|MusicManagerServer\\MusicManagerServer.csproj|solutionrelative:musicmanagerserver\\services\\songservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AD8FBE99-76B1-4A3A-B05E-C98E38379396}|MusicManagerServer\\MusicManagerServer.csproj|d:\\repos\\fmi\\fmi-masters\\musicmanagersoap\\musicmanagerserver\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{AD8FBE99-76B1-4A3A-B05E-C98E38379396}|MusicManagerServer\\MusicManagerServer.csproj|solutionrelative:musicmanagerserver\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AD8FBE99-76B1-4A3A-B05E-C98E38379396}|MusicManagerServer\\MusicManagerServer.csproj|d:\\repos\\fmi\\fmi-masters\\musicmanagersoap\\musicmanagerserver\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AD8FBE99-76B1-4A3A-B05E-C98E38379396}|MusicManagerServer\\MusicManagerServer.csproj|solutionrelative:musicmanagerserver\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "D:\\repos\\fmi\\fmi-masters\\MusicManagerSOAP\\MusicManagerServer\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "MusicManagerServer\\Properties\\launchSettings.json",
+              "ToolTip": "D:\\repos\\fmi\\fmi-masters\\MusicManagerSOAP\\MusicManagerServer\\Properties\\launchSettings.json",
+              "RelativeToolTip": "MusicManagerServer\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-04-28T19:05:35.345Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Song.cs",
+              "DocumentMoniker": "D:\\repos\\fmi\\fmi-masters\\MusicManagerSOAP\\MusicManagerServer\\Models\\Song.cs",
+              "RelativeDocumentMoniker": "MusicManagerServer\\Models\\Song.cs",
+              "ToolTip": "D:\\repos\\fmi\\fmi-masters\\MusicManagerSOAP\\MusicManagerServer\\Models\\Song.cs",
+              "RelativeToolTip": "MusicManagerServer\\Models\\Song.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-28T19:05:13.415Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "SongService.cs",
+              "DocumentMoniker": "D:\\repos\\fmi\\fmi-masters\\MusicManagerSOAP\\MusicManagerServer\\Services\\SongService.cs",
+              "RelativeDocumentMoniker": "MusicManagerServer\\Services\\SongService.cs",
+              "ToolTip": "D:\\repos\\fmi\\fmi-masters\\MusicManagerSOAP\\MusicManagerServer\\Services\\SongService.cs",
+              "RelativeToolTip": "MusicManagerServer\\Services\\SongService.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAUwA8AAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-28T19:04:11.953Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\repos\\fmi\\fmi-masters\\MusicManagerSOAP\\MusicManagerServer\\appsettings.json",
+              "RelativeDocumentMoniker": "MusicManagerServer\\appsettings.json",
+              "ToolTip": "D:\\repos\\fmi\\fmi-masters\\MusicManagerSOAP\\MusicManagerServer\\appsettings.json",
+              "RelativeToolTip": "MusicManagerServer\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-04-28T19:04:09.083Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\repos\\fmi\\fmi-masters\\MusicManagerSOAP\\MusicManagerServer\\Program.cs",
+              "RelativeDocumentMoniker": "MusicManagerServer\\Program.cs",
+              "ToolTip": "D:\\repos\\fmi\\fmi-masters\\MusicManagerSOAP\\MusicManagerServer\\Program.cs",
+              "RelativeToolTip": "MusicManagerServer\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-28T18:43:12.164Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
