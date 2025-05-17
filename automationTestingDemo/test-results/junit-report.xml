@@ -1,0 +1,14 @@
+<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="0" time="13.214116">
+<testsuite name="dashboard.spec.ts" timestamp="2025-05-17T08:02:40.254Z" hostname="chromium" tests="1" failures="0" skipped="0" time="10.313" errors="0">
+<testcase name="Dashboard Functionality › Apply leave message should return empty message" classname="dashboard.spec.ts" time="10.313">
+<system-out>
+<![CDATA[[INFO] 2025-05-17T08:02:42.995Z - Navigating to login page
+[INFO] 2025-05-17T08:02:42.997Z - Navigating to: https://opensource-demo.orangehrmlive.com/web/index.php/auth/login
+[INFO] 2025-05-17T08:02:46.349Z - Logging in with username: Admin
+[INFO] 2025-05-17T08:02:51.259Z - Checking if dashboard is displayed
+[INFO] 2025-05-17T08:02:51.289Z - Taking screenshot: dashboard-1747468962993-298-logged-in
+]]>
+</system-out>
+</testcase>
+</testsuite>
+</testsuites>

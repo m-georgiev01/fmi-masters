@@ -1,0 +1,29 @@
+{
+  "name": "orangehrm-automation",
+  "version": "1.0.0",
+  "description": "Automation testing framework for OrangeHRM using Playwright and TypeScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx playwright test",
+    "test:headed": "npx playwright test --headed",
+    "test:ui": "npx playwright test --ui",
+    "report": "npx playwright show-report"
+  },
+  "keywords": [
+    "playwright",
+    "typescript",
+    "automation",
+    "testing",
+    "orangehrm"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.51.1",
+    "dotenv": "^16.4.7",
+    "typescript": "^5.8.2"
+  },
+  "directories": {
+    "test": "tests"
+  }
+}
